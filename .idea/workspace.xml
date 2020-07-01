@@ -89,6 +89,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -221,12 +222,12 @@
       <updated>1592791997814</updated>
       <workItem from="1592792007842" duration="7436000" />
       <workItem from="1593122800753" duration="3916000" />
-      <workItem from="1593550896944" duration="19504000" />
+      <workItem from="1593550896944" duration="19810000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30856000" />
+    <option name="totallyTimeSpent" value="31162000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
