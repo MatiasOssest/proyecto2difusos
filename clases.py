@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
 class Sistema:
+    ALPHA = 0.7
+    BETA = 0.2
+    GAMMA = 0.85
+    EPSILON = 0.5
+    DELTA = lambda vc: 0.2 / vc
 
-    def __init__(self,base_hechos, base_reglas, hipotesis):
+    def __init__(self, base_hechos, base_reglas, hipotesis, d1=True):
+        self.d1 = d1
         self.base_hechos = base_hechos
         self.base_reglas = base_reglas
         self.hipotesis = hipotesis
@@ -11,6 +17,23 @@ class Sistema:
         string = "Base de Hechos: %s \nBase de Reglas: %s \n hipotesis: %s" % \
                  (self.base_hechos, self.base_reglas, self.hipotesis)
         return string
+
+    def preguntar(self, pregunta):
+        respuesta = input(pregunta[0])
+        premisa = pregunta[1]
+        hecho = Hecho(premisa, respuesta)
+        self.evaluar(hecho)
+
+    def evaluar(self, hecho):
+        '''
+        1.- Revisa la base de hechos si es que una hipótesis cumple cierto valor de certeza
+        2.- Revisa la base de reglas, cuales se activan y actualiza las hipótesis
+        3.- Se almacenan las hipótesis actualizadas en la base de Hechos.
+        :param hecho:
+        :return: None
+        '''
+        pass
+
 
 class BaseHecho:
 
@@ -78,6 +101,12 @@ class BaseReglas:
         for regla in self.reglas:
             if regla.identif == identif:
                 return regla
+
+    def keys(self):
+        key = []
+        for regla in self.reglas:
+            key.append(regla.identif)
+        return key
 
 
 class Regla:

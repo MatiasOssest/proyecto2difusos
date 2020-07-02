@@ -1,0 +1,100 @@
+[
+  {
+    "pregunta": "¿El animal tiene pelo?",
+    "clase": "pelaje",
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "pelo"
+  },
+  {
+    "pregunta": "¿El animal da leche?",
+    "clase": "reproducción",
+    "obj": "animal",
+    "atr": "da",
+    "val": "leche"
+  },
+  {
+    "pregunta": "¿El animal pone huevos?",
+    "clase": "reproducción",
+    "obj": "animal",
+    "atr": "pone",
+    "val": "huevos"
+  },
+  {
+    "pregunta": "¿El animal puede volar?",
+    "clase": null,
+    "obj": "animal",
+    "atr": "puede",
+    "val": "volar"
+  },
+  {
+    "pregunta": "¿El animal tiene plumas?",
+    "clase": "pelaje",
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "plumas"
+  },
+  {
+    "pregunta": "¿El animal come carne?",
+    "clase": "alimentación",
+    "obj": "animal",
+    "atr": "come",
+    "val": "carne"
+  },
+  {
+    "pregunta": "¿El animal es un rumiante?",
+    "clase": "alimentación",
+    "obj": "animal",
+    "atr": "es",
+    "val": "rumiante"
+  },
+  {
+    "pregunta": "¿El animal tiene pezuñas?",
+    "clase": "patas",
+    "obj": "animal",
+    "atr": "puede",
+    "val": "volar"
+  },
+  {
+    "pregunta": "¿El animal vive con personas?",
+    "clase": "vivienda",
+    "obj": "animal",
+    "atr": "vive",
+    "val": "con personas"
+  },
+  {
+    "pregunta": "¿El animal se puede encontrar en un zoológico?",
+    "clase": "vivienda",
+    "obj": "animal",
+    "atr": "puede",
+    "val": "volar"
+  },
+  {
+    "pregunta": "¿El animal tiene manchas oscuras?",
+    "clase": null,
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "manchas oscuras"
+  },
+  {
+    "pregunta": "¿El animal tiene rayas negras?",
+    "clase": null,
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "rayas negras"
+  },
+  {
+    "pregunta": "¿El animal tiene cuello largo?",
+    "clase": null,
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "cuello largo"
+  },
+  {
+    "pregunta": "¿El animal es feo?",
+    "clase": null,
+    "obj": "animal",
+    "atr": "es",
+    "val": "feo"
+  }
+]

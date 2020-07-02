@@ -319,5 +319,3 @@ base_de_reglas.agregar_regla(r)
 hipotesis.agregar_hecho(h1)
 
 hipotesis.reset_vc()
-print(hipotesis)
-print(base_de_reglas)
