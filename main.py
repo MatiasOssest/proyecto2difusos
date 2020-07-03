@@ -20,3 +20,7 @@ with open("preguntas.json", encoding="utf-8") as f:
 
 clases = obtener_clases(preguntas)
 print(clases)
+
+sistema.base_hechos.agregar_hecho(hipotesis)
+actual = sistema.base_hechos.get_last()
+print(actual[1])

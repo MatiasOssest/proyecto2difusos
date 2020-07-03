@@ -18,9 +18,13 @@ class Sistema:
                  (self.base_hechos, self.base_reglas, self.hipotesis)
         return string
 
-    def preguntar(self, pregunta):
-        respuesta = input(pregunta[0])
-        premisa = pregunta[1]
+    def preguntar(self, pregunta,clases):
+        if clases[pregunta["clase"]]:
+            respuesta = -1
+        else:
+            respuesta = float(input(pregunta["pregunta"]))
+
+        premisa = Tripleta(pregunta["obj"], pregunta["atr"], pregunta["val"])
         hecho = Hecho(premisa, respuesta)
         self.evaluar(hecho)
 
@@ -32,7 +36,14 @@ class Sistema:
         :param hecho:
         :return: None
         '''
-        pass
+        self.revisar_base_hechos()
+
+    def revisar_base_hechos(self):
+        for hecho in self.base_hechos[-1]:
+            for hipo in self.hipotesis:
+                if abs(hecho.vc) > self.BETA and hipo.tripleta.equal(hecho.tripleta) and self.d1:
+                    return hipo
+
 
 
 class BaseHecho:
@@ -51,12 +62,19 @@ class BaseHecho:
         string += "]"
         return string
 
+    def __getitem__(self, item):
+        return self.hechos[item]
+
     def agregar_hecho(self, hecho):
         self.hechos.append(hecho)
 
     def reset_vc(self):
         for hecho in self.hechos:
             hecho.vc = 0.0
+
+    def get_last(self):
+        return self.hechos[-1]
+
 
 
 class Hecho:
@@ -67,6 +85,7 @@ class Hecho:
 
     def __str__(self):
         return "(" + str(self.tripleta) + " " + str(self.vc) + ")"
+
 
 
 class Tripleta:
