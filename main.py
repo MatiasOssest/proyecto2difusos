@@ -18,9 +18,18 @@ sistema = Sistema(base_de_hechos, base_de_reglas, hipotesis)
 with open("preguntas.json", encoding="utf-8") as f:
     preguntas = json.load(f)
 
+
+def generaPreguntas(pregs):
+    for pregunta in pregs:
+        yield pregunta
+
+p = generaPreguntas(preguntas)
+print(next(p))
 clases = obtener_clases(preguntas)
-print(clases)
+
 
 sistema.base_hechos.agregar_hecho(hipotesis)
-actual = sistema.base_hechos.get_last()
-print(actual[1])
+
+a = sistema.get_conclusion_intermedia(hipotesis[0])
+
+print(type(sistema.base_reglas[0].premisa[0]))

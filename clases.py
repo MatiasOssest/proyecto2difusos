@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+from utils import *
 
 class Sistema:
     ALPHA = 0.7
@@ -7,44 +9,74 @@ class Sistema:
     EPSILON = 0.5
     DELTA = lambda vc: 0.2 / vc
 
+    with open("preguntas.json", encoding="utf-8") as f:
+        preguntas = json.load(f)
+
     def __init__(self, base_hechos, base_reglas, hipotesis, d1=True):
         self.d1 = d1
         self.base_hechos = base_hechos
         self.base_reglas = base_reglas
         self.hipotesis = hipotesis
+        self.clases = obtener_clases(self.preguntas)
 
     def __str__(self):
         string = "Base de Hechos: %s \nBase de Reglas: %s \n hipotesis: %s" % \
                  (self.base_hechos, self.base_reglas, self.hipotesis)
         return string
 
-    def preguntar(self, pregunta,clases):
-        if clases[pregunta["clase"]]:
-            respuesta = -1
-        else:
-            respuesta = float(input(pregunta["pregunta"]))
-
-        premisa = Tripleta(pregunta["obj"], pregunta["atr"], pregunta["val"])
-        hecho = Hecho(premisa, respuesta)
-        self.evaluar(hecho)
-
-    def evaluar(self, hecho):
+    def evaluar(self):
         '''
-        1.- Revisa la base de hechos si es que una hipótesis cumple cierto valor de certeza
+        1.- Revisa la base de hechos si es que una hipótesis o conclusion intermedia
+            cumple cierto valor de certeza, si no está, se realiza una pregunta y se evalúa
+            el hecho en la base de reglas
         2.- Revisa la base de reglas, cuales se activan y actualiza las hipótesis
         3.- Se almacenan las hipótesis actualizadas en la base de Hechos.
         :param hecho:
         :return: None
         '''
-        self.revisar_base_hechos()
+        self.pregunta = self.get_pregunta()
+        for hipo in self.hipotesis:
+            self.revisar_base_hechos(hipo)
+            if hipo.vc >= self.ALPHA:
+                print(self.hipotesis)
+                break
 
-    def revisar_base_hechos(self):
-        for hecho in self.base_hechos[-1]:
-            for hipo in self.hipotesis:
-                if abs(hecho.vc) > self.BETA and hipo.tripleta.equal(hecho.tripleta) and self.d1:
-                    return hipo
+    def revisar_base_hechos(self, hipo):
+        conclusiones_int = self.get_conclusion_intermedia(hipo)
+        for conclu in conclusiones_int:
+            # la conclusión intermedia no se puede obtener de las reglas
+            if conclu.special:
+                hecho = self.pregunta_especial(conclu)
+                self.base_hechos.agregar_hecho(hecho)
+            # Si la conclusión intermedia no está en la base de hechos, hacer una pregunta
+            elif conclu not in self.base_hechos:
+                hecho = self.preguntar()
+                self.evaluar_reglas(hecho)
 
+    def evaluar_reglas(self, hecho):
+        pass
 
+    def pregunta_especial(self,):
+        pass
+
+    def preguntar(self):
+        p = next(self.pregunta)
+        if self.clases[p["clase"]]:
+            respuesta = -1
+        else:
+            respuesta = float(input(p["pregunta"]))
+
+        premisa = Tripleta(p["obj"], p["atr"], p["val"])
+        return Hecho(premisa, respuesta)
+
+    def get_pregunta(self):
+        for preg in self.preguntas:
+            yield preg
+
+    def get_conclusion_intermedia(self, hipo):
+        for regla in self.base_reglas:
+            if str(regla.conclusion[0].tripleta) == str(hipo.tripleta):
+                return regla.premisa
 
 class BaseHecho:
 
@@ -90,10 +122,11 @@ class Hecho:
 
 class Tripleta:
 
-    def __init__(self, obj, atr, val):
+    def __init__(self, obj, atr, val, special=False):
         self.obj = obj
         self.atr = atr
         self.val = val
+        self.special = special
 
     def __str__(self):
         return "(%s %s %s)" % (self.obj, self.atr, self.val)
@@ -112,6 +145,9 @@ class BaseReglas:
         for regla in self.reglas:
             string += "%s \n" % str(regla)
         return string
+
+    def __getitem__(self, item):
+        return self.reglas[item]
 
     def agregar_regla(self, regla):
         self.reglas.append(regla)
@@ -157,3 +193,6 @@ class Premisa:
                 string += ", "
         string += "]"
         return string
+
+    def __getitem__(self, item):
+        return self.clausula[item]

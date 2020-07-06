@@ -158,7 +158,7 @@ base_de_reglas.agregar_regla(r)
 
 p1 = Tripleta(animal, es, "mamífero")
 p2 = Tripleta(animal, es, "carnívoro")
-p3 = Tripleta(animal, tiene, "manchas oscuras")
+p3 = Tripleta(animal, tiene, "manchas oscuras", True)
 premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "cheetah")
@@ -173,7 +173,7 @@ hipotesis.agregar_hecho(h1)
 
 p1 = Tripleta(animal, es, "mamífero")
 p2 = Tripleta(animal, es, "carnívoro")
-p3 = Tripleta(animal, tiene, "rayas negras")
+p3 = Tripleta(animal, tiene, "rayas negras", True)
 premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "tigre")
@@ -218,7 +218,7 @@ hipotesis.agregar_hecho(h1)
 
 p1 = Tripleta(animal, es, "mamífero")
 p2 = Tripleta(animal, es, "ungulado")
-p3 = Tripleta(animal, tiene, "cuello largo")
+p3 = Tripleta(animal, tiene, "cuello largo", True)
 premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "jirafa")
@@ -233,7 +233,7 @@ hipotesis.agregar_hecho(h1)
 
 p1 = Tripleta(animal, es, "mamífero")
 p2 = Tripleta(animal, es, "ungulado")
-p3 = Tripleta(animal, tiene, "rayas negras")
+p3 = Tripleta(animal, tiene, "rayas negras", True)
 premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "cebra")
@@ -248,7 +248,7 @@ hipotesis.agregar_hecho(h1)
 
 p1 = Tripleta(animal, es, "mamífero")
 p2 = Tripleta(animal, "puede", "volar")
-p3 = Tripleta(animal, es, "feo")
+p3 = Tripleta(animal, es, "feo", True)
 premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "murciélago")
@@ -262,7 +262,7 @@ hipotesis.agregar_hecho(h1)
 # Regla 19
 
 p1 = Tripleta(animal, es, "ave")
-p2 = Tripleta(animal, "vuela", "bien")
+p2 = Tripleta(animal, "vuela", "bien", True)
 
 premisa = Premisa(p1, p2)
 
@@ -277,7 +277,7 @@ hipotesis.agregar_hecho(h1)
 # Regla 20
 
 p1 = Tripleta(animal, es, "ave")
-p2 = Tripleta(animal, "corre", "rápido")
+p2 = Tripleta(animal, "corre", "rápido", True)
 premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "avestruz")
@@ -291,7 +291,7 @@ hipotesis.agregar_hecho(h1)
 # Regla 21
 
 p1 = Tripleta(animal, es, "ave")
-p2 = Tripleta(animal, es, "parlanchín")
+p2 = Tripleta(animal, es, "parlanchín", True)
 premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "loro")
@@ -305,9 +305,9 @@ hipotesis.agregar_hecho(h1)
 # Regla 22
 
 p1 = Tripleta(animal, es, "mamífero")
-p2 = Tripleta(animal, es, "grande")
+p2 = Tripleta(animal, es, "grande", True)
 p3 = Tripleta(animal, es, "ungulado")
-p4 = Tripleta(animal, tiene, "trompa")
+p4 = Tripleta(animal, tiene, "trompa", True)
 premisa = Premisa(p1, p2, p3, p4)
 
 t1 = Tripleta(animal, es, "elefante")
