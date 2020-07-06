@@ -2,6 +2,7 @@
 import json
 from utils import *
 
+
 class Sistema:
     ALPHA = 0.7
     BETA = 0.2
@@ -48,7 +49,7 @@ class Sistema:
             if conclu.special:
                 hecho = self.pregunta_especial(conclu)
                 self.base_hechos.agregar_hecho(hecho)
-            # Si la conclusión intermedia no está en la base de hechos, hacer una pregunta
+            # si la conclusión intermedia no está en la base de hechos, hacer una pregunta
             elif conclu not in self.base_hechos:
                 hecho = self.preguntar()
                 self.evaluar_reglas(hecho)
@@ -56,15 +57,16 @@ class Sistema:
     def evaluar_reglas(self, hecho):
         pass
 
-    def pregunta_especial(self,):
-        pass
+    def pregunta_especial(self, tripleta):
+        res = float(input("¿El %s %s &s ? : \n" % (tripleta.obj, tripleta.atr, tripleta.val)))
+        return Hecho(tripleta, res)
 
     def preguntar(self):
         p = next(self.pregunta)
         if self.clases[p["clase"]]:
             respuesta = -1
         else:
-            respuesta = float(input(p["pregunta"]))
+            respuesta = float(input(p["pregunta"] + " : \n"))
 
         premisa = Tripleta(p["obj"], p["atr"], p["val"])
         return Hecho(premisa, respuesta)
@@ -77,6 +79,7 @@ class Sistema:
         for regla in self.base_reglas:
             if str(regla.conclusion[0].tripleta) == str(hipo.tripleta):
                 return regla.premisa
+
 
 class BaseHecho:
 
@@ -108,7 +111,6 @@ class BaseHecho:
         return self.hechos[-1]
 
 
-
 class Hecho:
 
     def __init__(self, tripleta, vc):
@@ -117,7 +119,6 @@ class Hecho:
 
     def __str__(self):
         return "(" + str(self.tripleta) + " " + str(self.vc) + ")"
-
 
 
 class Tripleta:
