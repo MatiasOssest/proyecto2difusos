@@ -8,7 +8,6 @@ class Sistema:
     BETA = 0.2
     GAMMA = 0.85
     EPSILON = 0.5
-    DELTA = lambda vc: 0.2 / vc
 
     with open("preguntas.json", encoding="utf-8") as f:
         preguntas = json.load(f)
@@ -25,6 +24,9 @@ class Sistema:
                  (self.base_hechos, self.base_reglas, self.hipotesis)
         return string
 
+    def delta(self, vc):
+        return 0.2 / vc
+
     def evaluar(self):
         '''
         1.- Revisa la base de hechos si es que una hipótesis o conclusion intermedia
@@ -39,6 +41,7 @@ class Sistema:
 
         for hipo in self.hipotesis:
             self.revisar_base_hechos(hipo)
+            print(hipo)
             if hipo.vc >= self.ALPHA:
                 print(self.hipotesis)
                 break
@@ -46,59 +49,73 @@ class Sistema:
     def revisar_base_hechos(self, hipo):
         conclusiones_int = self.get_conclusion_intermedia(hipo)
         for conclu in conclusiones_int:
+            print(conclu)
+            self.actualizar_hipotesis()
             esta_o_importante = self.base_hechos.es_importante(conclu, self.GAMMA)
             # la conclusión intermedia no se puede obtener de las reglas
             if conclu.special:
                 hecho = self.pregunta_especial(conclu)
                 self.base_hechos.agregar_hecho(hecho)
+                self.evaluar_reglas()
             # si la conclusión intermedia no está en la base de hechos o no tiene
             # suficiente importancia para seguir mejorando, hacer una pregunta
 
             elif not esta_o_importante:
                 hecho = Hecho(conclu, 0)
-                self.base_hechos.agregar_hecho(hecho)
-                while abs(hecho.vc) <= self.GAMMA:
-                    #try:
+                while hecho.vc <= self.BETA:
+                    print(self.base_hechos)
+                    self.base_hechos.reemplazar(hecho)
                     respuesta = self.preguntar()
                     self.base_hechos.agregar_hecho(respuesta)
-                    print(self.base_hechos)
                     self.evaluar_reglas()
                     hecho = self.base_hechos.buscar(conclu)
-
-                    #except:
-                     #   print("No hay más preguntas, los resultados son: \n%s"%self.hipotesis)
-                      #  break
 
     def evaluar_reglas(self):
 
         for regla in self.base_reglas:
-            mis_vc = [] # según las premisas de la reglas se consideran sus vc
+            mis_vc = []  # según las premisas de la reglas se consideran sus vc
             for p in regla.premisa:
                 hecho = self.base_hechos.buscar(p)
-                print(hecho)
                 mis_vc.append(hecho.vc)
 
-            print(mis_vc)
             minimo = conjuncion(mis_vc)
-            print(minimo)
-            if minimo > 0.2:
+            # min2 = regla.conclusion.minimo()
+            if minimo > self.delta(0.8):
                 for conclu in regla.conclusion:
-                    h = Hecho(conclu.tripleta, conclu.vc*minimo)
+                    h = Hecho(conclu.tripleta, conclu.vc * minimo)
                     self.base_hechos.reemplazar(h)
+
+    def actualizar_hipotesis(self):
+        for hipo in self.hipotesis:
+            if self.base_hechos.esta_en_la_base(hipo):
+                h = self.base_hechos.buscar(hipo)
+                self.hipotesis.reemplazar(h)
+
+        print(self.hipotesis)
 
     def pregunta_especial(self, tripleta):
         res = float(input("¿El %s %s %s ? : \n" % (tripleta.obj, tripleta.atr, tripleta.val)))
         return Hecho(tripleta, res)
 
     def preguntar(self):
-        p = next(self.pregunta)
-        if self.clases[p["clase"]]:
-            respuesta = -1
-        else:
-            respuesta = float(input(p["pregunta"] + " : \n"))
+        try:
+            p = next(self.pregunta)
 
-        premisa = Tripleta(p["obj"], p["atr"], p["val"])
-        return Hecho(premisa, respuesta)
+            if self.clases[p["clase"]]:
+                respuesta = -1
+            else:
+                respuesta = float(input(p["pregunta"] + " : \n"))
+                if abs(respuesta) > 1:
+                    print("Ingrese valor dentro del rango [-1, 1]")
+                    respuesta = float(input(p["pregunta"] + " : \n"))
+
+                elif respuesta >= 0.7:
+                    self.clases[p["clase"]] = True
+
+            premisa = Tripleta(p["obj"], p["atr"], p["val"])
+            return Hecho(premisa, respuesta)
+        except:
+            print("No hay más preguntas genéricas")
 
     def get_pregunta(self):
         for preg in self.preguntas:
@@ -111,6 +128,7 @@ class Sistema:
 
     def menor(self):
         pass
+
 
 class BaseHecho:
 
@@ -141,18 +159,24 @@ class BaseHecho:
     def get_last(self):
         return self.hechos[-1]
 
-    def esta_en_la_base(self, tripleta):
+    def esta_en_la_base(self, h):
         for hecho in self.hechos:
-            if hecho.tripleta.equal(tripleta):
+            if type(h) == Tripleta and hecho.tripleta.equal(h):
                 return True
-
+            elif type(h) == Hecho and hecho.equals(h):
+                return True
         return False
 
-    def buscar(self, tripleta):
+    def buscar(self, input):
         for hecho in self.hechos:
-            if hecho.tripleta.equal(tripleta):
+            if type(input) == Tripleta and hecho.tripleta.equal(input):
                 return hecho
-        return Hecho(tripleta, 0)
+            if type(input) == Hecho and hecho.equals(input):
+                return hecho
+            else:
+                if type(input) == Tripleta:
+                    return Hecho(input, 0)
+                return input
 
     def reemplazar(self, hecho):
         for idx, h in enumerate(self.hechos):
@@ -169,6 +193,7 @@ class BaseHecho:
             return hecho.vc >= threshold
         return False
 
+
 class Hecho:
 
     def __init__(self, tripleta, vc):
@@ -180,6 +205,7 @@ class Hecho:
 
     def equals(self, h):
         return self.tripleta.equal(h.tripleta)
+
 
 class Tripleta:
 

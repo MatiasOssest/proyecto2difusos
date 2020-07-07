@@ -12,10 +12,6 @@ from objetos import base_de_reglas, base_de_hechos, hipotesis
 from clases import *
 from utils import *
 
-
-
-
-'''
 with open("preguntas.json", encoding="utf-8") as f:
     preguntas = json.load(f)
 
@@ -25,9 +21,8 @@ def generaPreguntas(pregs):
         yield pregunta
 
 p = generaPreguntas(preguntas)
-print(next(p))
 clases = obtener_clases(preguntas)
-'''
+
 entrada = "y"
 while entrada == "y":
     sistema = Sistema(base_de_hechos, base_de_reglas, hipotesis)

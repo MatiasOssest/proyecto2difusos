@@ -29,7 +29,7 @@
   },
   {
     "pregunta": "¿El animal puede volar?",
-    "clase": null,
+    "clase": "volar",
     "obj": "animal",
     "atr": "puede",
     "val": "volar"

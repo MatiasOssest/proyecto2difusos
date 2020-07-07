@@ -88,7 +88,7 @@ base_de_reglas.agregar_regla(r)
 p1 = Tripleta(animal, "come", "carne")
 premisa = Premisa(p1)
 
-carnivoro = Tripleta(animal, es, "carnivoro")
+carnivoro = Tripleta(animal, es, "carnívoro")
 h1 = Hecho(carnivoro, 1.0)
 
 conclusion = BaseHecho(h1)
