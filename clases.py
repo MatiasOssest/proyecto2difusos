@@ -62,13 +62,12 @@ class Sistema:
 
             elif not esta_o_importante:
                 hecho = Hecho(conclu, 0)
-                while hecho.vc <= self.BETA:
-                    print(self.base_hechos)
-                    self.base_hechos.reemplazar(hecho)
+                while abs(hecho.vc) <= self.BETA:
                     respuesta = self.preguntar()
                     self.base_hechos.agregar_hecho(respuesta)
                     self.evaluar_reglas()
                     hecho = self.base_hechos.buscar(conclu)
+
 
     def evaluar_reglas(self):
 
@@ -79,9 +78,8 @@ class Sistema:
                 mis_vc.append(hecho.vc)
 
             minimo = conjuncion(mis_vc)
-            # min2 = regla.conclusion.minimo()
-            if minimo > self.delta(0.8):
-                for conclu in regla.conclusion:
+            for conclu in regla.conclusion:
+                if abs(minimo) > abs(self.delta(conclu.vc)):
                     h = Hecho(conclu.tripleta, conclu.vc * minimo)
                     self.base_hechos.reemplazar(h)
 
@@ -168,15 +166,18 @@ class BaseHecho:
         return False
 
     def buscar(self, input):
+        print()
         for hecho in self.hechos:
-            if type(input) == Tripleta and hecho.tripleta.equal(input):
+            print(hecho.tripleta)
+
+            if type(input) == Tripleta and str(hecho.tripleta) == str(input):
                 return hecho
-            if type(input) == Hecho and hecho.equals(input):
+            elif type(input) == Hecho and hecho.equals(input):
                 return hecho
-            else:
-                if type(input) == Tripleta:
-                    return Hecho(input, 0)
-                return input
+
+        if type(input) == Tripleta:
+            return Hecho(input, 0.0)
+        return input
 
     def reemplazar(self, hecho):
         for idx, h in enumerate(self.hechos):

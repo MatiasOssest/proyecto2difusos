@@ -163,11 +163,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "cheetah")
 h1 = Hecho(t1, 0.9)
+h2 = Hecho(t1, 0.9)
 
 conclusion = BaseHecho(h1)
 r = Regla("R12", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 13
 
@@ -178,11 +179,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "tigre")
 h1 = Hecho(t1, 0.85)
+h2 = Hecho(t1, 0.85)
 
 conclusion = BaseHecho(h1)
 r = Regla("R13", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 14
 
@@ -193,11 +195,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "perro")
 h1 = Hecho(t1, 0.9)
+h2 = Hecho(t1, 0.9)
 
 conclusion = BaseHecho(h1)
 r = Regla("R14", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 15
 
@@ -208,11 +211,12 @@ premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "tortuga")
 h1 = Hecho(t1, 0.7)
+h2 = Hecho(t1, 0.7)
 
 conclusion = BaseHecho(h1)
 r = Regla("R15", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 16
 
@@ -223,11 +227,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "jirafa")
 h1 = Hecho(t1, 1.0)
+h2 = Hecho(t1, 1.0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R16", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 17
 
@@ -238,11 +243,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "cebra")
 h1 = Hecho(t1, 0.95)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R17", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 18
 
@@ -253,11 +259,12 @@ premisa = Premisa(p1, p2, p3)
 
 t1 = Tripleta(animal, es, "murciélago")
 h1 = Hecho(t1, 0.9)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R18", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 19
 
@@ -268,11 +275,12 @@ premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "gaviota")
 h1 = Hecho(t1, 0.9)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R19", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 20
 
@@ -282,11 +290,12 @@ premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "avestruz")
 h1 = Hecho(t1, 1.0)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R20", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 21
 
@@ -296,11 +305,12 @@ premisa = Premisa(p1, p2)
 
 t1 = Tripleta(animal, es, "loro")
 h1 = Hecho(t1, 0.95)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R21", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 # Regla 22
 
@@ -312,10 +322,11 @@ premisa = Premisa(p1, p2, p3, p4)
 
 t1 = Tripleta(animal, es, "elefante")
 h1 = Hecho(t1, 0.9)
+h2 = Hecho(t1, 0)
 
 conclusion = BaseHecho(h1)
 r = Regla("R22", premisa, conclusion)
 base_de_reglas.agregar_regla(r)
-hipotesis.agregar_hecho(h1)
+hipotesis.agregar_hecho(h2)
 
 hipotesis.reset_vc()

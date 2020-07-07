@@ -22,7 +22,7 @@ def generaPreguntas(pregs):
 
 p = generaPreguntas(preguntas)
 clases = obtener_clases(preguntas)
-
+print(base_de_reglas)
 entrada = "y"
 while entrada == "y":
     sistema = Sistema(base_de_hechos, base_de_reglas, hipotesis)
