@@ -36,6 +36,7 @@ class Sistema:
         :return: None
         '''
         self.pregunta = self.get_pregunta()
+
         for hipo in self.hipotesis:
             self.revisar_base_hechos(hipo)
             if hipo.vc >= self.ALPHA:
@@ -50,9 +51,18 @@ class Sistema:
                 hecho = self.pregunta_especial(conclu)
                 self.base_hechos.agregar_hecho(hecho)
             # si la conclusión intermedia no está en la base de hechos, hacer una pregunta
-            elif conclu not in self.base_hechos:
-                hecho = self.preguntar()
-                self.evaluar_reglas(hecho)
+            elif not self.base_hechos.esta_hecho(conclu):
+                hecho = Hecho(conclu, 0)
+                self.base_hechos.agregar_hecho(hecho)
+                hecho = self.base_hechos.buscar(conclu)
+                while abs(hecho.vc) <= self.GAMMA:
+                    try:
+                        respuesta = self.preguntar()
+                        self.base_hechos.agregar_hecho(respuesta)
+                        self.evaluar_reglas(respuesta)
+                        hecho = self.base_hechos.buscar(conclu)
+                    except:
+                        break
 
     def evaluar_reglas(self, hecho):
         pass
@@ -110,7 +120,16 @@ class BaseHecho:
     def get_last(self):
         return self.hechos[-1]
 
-
+    def esta_hecho(self, tripleta):
+        for hecho in self.hechos:
+            if str(tripleta) == str(hecho.tripleta):
+                return True
+        return False
+    def buscar(self, tripleta):
+        for hecho in self.hechos:
+            if str(hecho.tripleta) == tripleta:
+                return hecho
+        return None
 class Hecho:
 
     def __init__(self, tripleta, vc):
