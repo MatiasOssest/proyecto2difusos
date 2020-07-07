@@ -1,18 +1,28 @@
-def disyuncion(x1, x2):
-    if abs(x1) > abs(x2):
-        return x1
+def disyuncion(x1):
+    mayor = -2
+    for valor in x1:
+        if abs(valor) > abs(mayor):
+            mayor = valor
+    return mayor
 
-    return x2
+
+def conjuncion(x1):
+    menor = 2
+    for valor in x1:
+        if abs(valor) < abs(menor):
+            menor = valor
+    return menor
 
 
-def conjuncion(x1, x2):
-    if abs(x1) < abs(x2):
-        return x1
+def producto(vc):
+    prod = 1
+    for valor in vc:
+        prod = prod * valor
+    return prod
 
-    return x2
 
 def obtener_clases(preguntas):
-    clases={}
+    clases = {}
     for pregunta in preguntas:
 
         try:
