@@ -22,9 +22,11 @@ def generaPreguntas(pregs):
 
 p = generaPreguntas(preguntas)
 clases = obtener_clases(preguntas)
-print(base_de_reglas)
 entrada = "y"
 while entrada == "y":
+    base_de_hechos.limpiar()
+    hipotesis.reset_vc()
     sistema = Sistema(base_de_hechos, base_de_reglas, hipotesis)
     sistema.evaluar()
+    print(sistema.hipotesis)
     entrada = input("desea intentar de nuevo ? [y/n]")

@@ -63,6 +63,13 @@
     "val": "volar"
   },
   {
+    "pregunta": "¿El animal tiene garras?",
+    "clase": "patas",
+    "obj": "animal",
+    "atr": "tiene",
+    "val": "garras"
+  },
+  {
     "pregunta": "¿El animal vive con personas?",
     "clase": "vivienda",
     "obj": "animal",

@@ -41,19 +41,16 @@ class Sistema:
 
         for hipo in self.hipotesis:
             self.revisar_base_hechos(hipo)
-            print(hipo)
             if hipo.vc >= self.ALPHA:
                 print(self.hipotesis)
-                break
+
 
     def revisar_base_hechos(self, hipo):
         conclusiones_int = self.get_conclusion_intermedia(hipo)
         for conclu in conclusiones_int:
-            print(conclu)
-            self.actualizar_hipotesis()
             esta_o_importante = self.base_hechos.es_importante(conclu, self.GAMMA)
             # la conclusión intermedia no se puede obtener de las reglas
-            if conclu.special:
+            if conclu.special and not esta_o_importante:
                 hecho = self.pregunta_especial(conclu)
                 self.base_hechos.agregar_hecho(hecho)
                 self.evaluar_reglas()
@@ -63,11 +60,15 @@ class Sistema:
             elif not esta_o_importante:
                 hecho = Hecho(conclu, 0)
                 while abs(hecho.vc) <= self.BETA:
-                    respuesta = self.preguntar()
-                    self.base_hechos.agregar_hecho(respuesta)
-                    self.evaluar_reglas()
-                    hecho = self.base_hechos.buscar(conclu)
-
+                    try:
+                        self.actualizar_hipotesis()
+                        respuesta = self.preguntar()
+                        self.base_hechos.agregar_hecho(respuesta)
+                        self.evaluar_reglas()
+                        hecho = self.base_hechos.buscar(conclu)
+                        print(self.base_hechos)
+                    except:
+                        break
 
     def evaluar_reglas(self):
 
@@ -77,10 +78,11 @@ class Sistema:
                 hecho = self.base_hechos.buscar(p)
                 mis_vc.append(hecho.vc)
 
-            minimo = conjuncion(mis_vc)
+            minimo = min(mis_vc)
             for conclu in regla.conclusion:
                 if abs(minimo) > abs(self.delta(conclu.vc)):
                     h = Hecho(conclu.tripleta, conclu.vc * minimo)
+                    print(self.base_hechos)
                     self.base_hechos.reemplazar(h)
 
     def actualizar_hipotesis(self):
@@ -148,7 +150,8 @@ class BaseHecho:
         return self.hechos[item]
 
     def agregar_hecho(self, hecho):
-        self.hechos.append(hecho)
+        if type(hecho) == Hecho:
+            self.hechos.append(hecho)
 
     def reset_vc(self):
         for hecho in self.hechos:
@@ -166,10 +169,7 @@ class BaseHecho:
         return False
 
     def buscar(self, input):
-        print()
         for hecho in self.hechos:
-            print(hecho.tripleta)
-
             if type(input) == Tripleta and str(hecho.tripleta) == str(input):
                 return hecho
             elif type(input) == Hecho and hecho.equals(input):
@@ -180,6 +180,7 @@ class BaseHecho:
         return input
 
     def reemplazar(self, hecho):
+
         for idx, h in enumerate(self.hechos):
             if not self.esta_en_la_base(hecho):
                 self.agregar_hecho(hecho)
@@ -189,12 +190,16 @@ class BaseHecho:
                 break
 
     def es_importante(self, tripleta, threshold):
-        if self.esta_en_la_base(tripleta):
-            hecho = self.buscar(tripleta)
-            return hecho.vc >= threshold
-        return False
+        try:
+            if self.esta_en_la_base(tripleta):
+                hecho = self.buscar(tripleta)
+                return abs(hecho.vc) >= threshold
+            return False
+        except:
+            return True
 
-
+    def limpiar(self):
+        self.hechos = []
 class Hecho:
 
     def __init__(self, tripleta, vc):
