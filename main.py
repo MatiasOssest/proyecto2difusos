@@ -9,24 +9,13 @@
 import json
 
 from objetos import base_de_reglas, base_de_hechos, hipotesis
-from clases import *
-from utils import *
+from clases import Sistema
 
-with open("preguntas.json", encoding="utf-8") as f:
-    preguntas = json.load(f)
-
-
-def generaPreguntas(pregs):
-    for pregunta in pregs:
-        yield pregunta
-
-p = generaPreguntas(preguntas)
-clases = obtener_clases(preguntas)
 entrada = "y"
 while entrada == "y":
     base_de_hechos.limpiar()
     hipotesis.reset_vc()
     sistema = Sistema(base_de_hechos, base_de_reglas, hipotesis)
     sistema.evaluar()
-    print(sistema.hipotesis)
-    entrada = input("desea intentar de nuevo ? [y/n]")
+
+    entrada = input("¿Desea jugar otra vez? [y/n]")

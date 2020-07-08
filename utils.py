@@ -8,9 +8,14 @@ def disyuncion(x1):
 
 def conjuncion(x1):
     menor = 2
+    b = False
     for valor in x1:
+        if valor == 0:
+            b = True
         if abs(valor) < abs(menor):
             menor = valor
+    if not b:
+        return min(x1)
     return menor
 
 

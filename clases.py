@@ -41,9 +41,14 @@ class Sistema:
 
         for hipo in self.hipotesis:
             self.revisar_base_hechos(hipo)
-            if hipo.vc >= self.ALPHA:
-                print(self.hipotesis)
-
+            self.actualizar_hipotesis()
+            h = self.hipotesis.buscar(hipo)
+            if h.vc >= self.ALPHA and self.d1:
+                print("El animal es %s con grado de certeza %s" % (h.tripleta.val, h.vc))
+                break
+        print("Se terminó este juego, los resultados son: \n")
+        for hipo in self.hipotesis:
+            print(hipo)
 
     def revisar_base_hechos(self, hipo):
         conclusiones_int = self.get_conclusion_intermedia(hipo)
@@ -66,7 +71,7 @@ class Sistema:
                         self.base_hechos.agregar_hecho(respuesta)
                         self.evaluar_reglas()
                         hecho = self.base_hechos.buscar(conclu)
-                        print(self.base_hechos)
+                        # print(self.base_hechos)
                     except:
                         break
 
@@ -78,12 +83,12 @@ class Sistema:
                 hecho = self.base_hechos.buscar(p)
                 mis_vc.append(hecho.vc)
 
-            minimo = min(mis_vc)
+            minimo = conjuncion(mis_vc)
             for conclu in regla.conclusion:
                 if abs(minimo) > abs(self.delta(conclu.vc)):
                     h = Hecho(conclu.tripleta, conclu.vc * minimo)
-                    print(self.base_hechos)
                     self.base_hechos.reemplazar(h)
+                    # print(self.base_hechos)
 
     def actualizar_hipotesis(self):
         for hipo in self.hipotesis:
@@ -91,7 +96,8 @@ class Sistema:
                 h = self.base_hechos.buscar(hipo)
                 self.hipotesis.reemplazar(h)
 
-        print(self.hipotesis)
+        # print(self.hipotesis)
+
 
     def pregunta_especial(self, tripleta):
         res = float(input("¿El %s %s %s ? : \n" % (tripleta.obj, tripleta.atr, tripleta.val)))
@@ -125,9 +131,6 @@ class Sistema:
         for regla in self.base_reglas:
             if str(regla.conclusion[0].tripleta) == str(hipo.tripleta):
                 return regla.premisa
-
-    def menor(self):
-        pass
 
 
 class BaseHecho:
@@ -200,6 +203,8 @@ class BaseHecho:
 
     def limpiar(self):
         self.hechos = []
+
+
 class Hecho:
 
     def __init__(self, tripleta, vc):

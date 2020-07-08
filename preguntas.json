@@ -49,18 +49,18 @@
     "val": "carne"
   },
   {
-    "pregunta": "¿El animal es un rumiante?",
-    "clase": "alimentación",
-    "obj": "animal",
-    "atr": "es",
-    "val": "rumiante"
-  },
-  {
     "pregunta": "¿El animal tiene pezuñas?",
     "clase": "patas",
     "obj": "animal",
     "atr": "puede",
     "val": "volar"
+  },
+  {
+    "pregunta": "¿El animal es un rumiante?",
+    "clase": "alimentación",
+    "obj": "animal",
+    "atr": "es",
+    "val": "rumiante"
   },
   {
     "pregunta": "¿El animal tiene garras?",
